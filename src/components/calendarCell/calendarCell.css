@@ -1,0 +1,7 @@
+.calendarCellContainer {
+  position: relative;
+  border: 1px dashed black;
+}
+.calendarCell {
+  aspect-ratio: 1 / 1;
+}
