@@ -5,6 +5,7 @@ import './calendarWeek.css'
 import { CalendarDay } from '../calendarDay/calendarDay'
 
 export const CalendarWeek = ({ todaysDate, days, week }) => {
+  // Create an array of days in this specific week
   const daysInWeek = useMemo(() => {
     const dayArray = []
     for (let i = week * 7; i < week * 7 + 7; i++) {
@@ -16,7 +17,7 @@ export const CalendarWeek = ({ todaysDate, days, week }) => {
   return (
     <tr>
       {daysInWeek.map((day, idx) => {
-        return <CalendarDay key={idx} day={day} />
+        return <CalendarDay key={idx} day={day} todaysDate={todaysDate} />
       })}
     </tr>
   )

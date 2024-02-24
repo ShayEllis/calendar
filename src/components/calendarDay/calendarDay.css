@@ -4,3 +4,9 @@
 .calendarCell {
   aspect-ratio: 1 / 1;
 }
+.currentDate {
+  color: red;
+}
+.notCurrentMonth {
+  opacity: 0.25;
+}

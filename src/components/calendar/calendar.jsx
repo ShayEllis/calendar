@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
 import { CalendarWeek } from '../calendarWeek/calendarWeek'
 import './calendar.css'
+import { generateCalendarDays } from '../../utils/utils'
 
 export const Calendar = () => {
   // Create a new date object that weill be used later.
@@ -31,31 +31,8 @@ export const Calendar = () => {
       todaysDate.getDay()) /
       7
   )
-  const [days, setDays] = useState(Array(42).fill(null))
-
-  useEffect(() => {
-    setDays((d) => {
-      // Create a Date object and set it to the first of the month
-      const startOfCalendar = new Date(
-        todaysDate.getFullYear(),
-        todaysDate.getMonth(),
-        1
-      )
-      // If the month does not start on SUN, the start of the calendar, get the correct day number for the previous month
-      if (startOfCalendar.getDay() > 0) {
-        startOfCalendar.setDate(
-          startOfCalendar.getDate() - startOfCalendar.getDay()
-        )
-      }
-      // Map the number of days in the calendar and create an array to build the calendar from
-      return d.map(() => {
-        const currentDay = startOfCalendar.getDate()
-        startOfCalendar.setDate(startOfCalendar.getDate() + 1)
-
-        return currentDay
-      })
-    })
-  }, [])
+  // Use utils function to generate the days in the calender
+  const days = generateCalendarDays(todaysDate)
 
   // console.log('Day number of the month: ', todaysDate.getDate())
   // console.log('Day number of the week:', todaysDate.getDay())
