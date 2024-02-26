@@ -1,12 +1,17 @@
 .calendarCellContainer {
-  border: 1px dashed black;
+  border: 1px dashed var(--main-text);
 }
 .calendarCell {
+  padding: 2px;
   aspect-ratio: 1 / 1;
 }
 .currentDate {
-  color: red;
+  color: var(--current-day);
 }
 .notCurrentMonth {
   opacity: 0.25;
+  pointer-events: none;
+}
+.calenderCellClicked {
+  background-color: lightblue;
 }

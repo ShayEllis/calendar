@@ -3,5 +3,21 @@
   width: 90%;
   border-collapse: collapse;
   margin: 0 auto;
-  margin-top: 2rem;
+}
+
+.calendarHeading {
+  padding: 1rem;
+}
+
+.dayHeading {
+  margin: 0 .125rem .25rem .125rem;
+  font-weight: normal;
+}
+
+.SAT, .SUN {
+  background-color: var(--sat-sun-heading);
+}
+
+.MON, .TUE, .WED, .THU, .FRI {
+  background-color: var(--mon-fri-heading);
 }

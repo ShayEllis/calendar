@@ -34,22 +34,18 @@ export const Calendar = () => {
   // Use utils function to generate the days in the calender
   const days = generateCalendarDays(todaysDate)
 
-  // console.log('Day number of the month: ', todaysDate.getDate())
-  // console.log('Day number of the week:', todaysDate.getDay())
-  // console.log(todaysDate.getMinutes())
-
   return (
     <table id='calendar'>
       <thead>
         <tr>
-          <th colSpan={7}>{`${
+          <th className='calendarHeading' colSpan={7}>{`${
             months[todaysDate.getMonth()]
           } ${todaysDate.getFullYear()}`}</th>
         </tr>
         <tr>
           {weekDays.map((day) => (
-            <th key={day} className={day}>
-              {day}
+            <th key={day}>
+              <div className={`dayHeading ${day}`}>{day}</div>
             </th>
           ))}
         </tr>

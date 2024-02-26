@@ -1,0 +1,5 @@
+#root {
+  overflow: hidden;
+  height: 100%;
+  background-color: var(--main-background);
+}
