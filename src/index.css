@@ -11,6 +11,10 @@ html {
   color: var(--main-text)
 }
 
+::selection {
+  background-color: var(--sat-sun-heading);
+}
+
 body {
   height: 100%;
 }

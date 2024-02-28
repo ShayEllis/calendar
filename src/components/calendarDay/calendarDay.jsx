@@ -1,6 +1,8 @@
 import { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import './calendarDay.css'
+import { Modal } from '../modal/modal'
+import { CalendarData } from '../calendarData/calendarData'
 
 export const CalendarDay = ({ day, todaysDate }) => {
   // Set differnet styles for the current day of the month and any days that are not part of the current month
@@ -14,16 +16,11 @@ export const CalendarDay = ({ day, todaysDate }) => {
     }
   }, [day])
 
-  const handleClick = (event) => {
-    console.log(event.target.classList.toggle('calenderCellClicked'))
-    // event.target.classList
-  }
-
   return (
     <td className='calendarCellContainer'>
-      <div className={classes} onClick={handleClick}>
-        {day.getDate()}
-      </div>
+      <Modal>
+        <CalendarData classes={classes} date={day.getDate()} />
+      </Modal>
     </td>
   )
 }
