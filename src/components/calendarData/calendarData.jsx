@@ -1,10 +1,12 @@
-export const CalendarData = ({ classes, date, data }) => {
-  console.log(data)
+import './calendarData.css'
 
+export const CalendarData = ({ classes, date, data, highlightDay }) => {
   return (
     <div className={classes}>
-      {date}
-      {data && <div>Data Entered - Click to View</div>}
+      <span className='calendarDate'>{date}</span>
+      <div className='calendarDataContainer' style={highlightDay ? { backgroundColor: '#5BBB60'} : undefined}>
+        {!!data && <div className='calendarData'>{`$${data}`}</div>}
+      </div>
     </div>
   )
 }

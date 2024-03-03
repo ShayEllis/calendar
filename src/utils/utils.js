@@ -12,9 +12,11 @@ export const generateCalendarDays = (currentDate) => {
     )
   }
   // Map the number of days in the calendar and create an array to build the calendar from
-  return Array(42).fill(null).map(() => {
-    const currentDay = new Date(startOfCalendar)
-    startOfCalendar.setDate(startOfCalendar.getDate() + 1)
-    return currentDay
-  })
+  return Array(42)
+    .fill(null)
+    .map(() => {
+      const currentDay = new Date(startOfCalendar)
+      startOfCalendar.setDate(startOfCalendar.getDate() + 1)
+      return currentDay
+    })
 }

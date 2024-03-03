@@ -1,18 +1,57 @@
-.modalCloseBtn {
-  position: absolute;
-  top: .25rem;
-  right: .25rem;
-  cursor: pointer;
-}
-
 .dialog {
   position: relative;
   border: none;
-  padding: 2rem;
+  min-width: 352px;
+  padding: 1rem;
   border-radius: 0.5rem;
   box-shadow: hsl(0 0% 0% / 20%) 0 0 0.5rem 0.25rem;
 }
-
 .dialog::backdrop {
-  background: hsl(0 0% 0% / 50%);
+  background: var(--backdrop);
+}
+.inputContainer {
+  position: relative;
+  margin: 0 auto;
+  width: fit-content;
+}
+/* .inputContainer .modalLabel:not(:first-child) {
+  padding-top: 0.5rem;
+} */
+details {
+  padding-top: 0.5rem;
+}
+/* details[open] {
+  border: none;
+} */
+summary {
+  border-bottom: 1px solid black;
+  width: fit-content;
+}
+.modalDetailsLabel {
+  margin: .25rem 1rem;
+}
+.modalLabel {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+}
+.moneySpentLabel {
+  min-width: 288px;
+}
+.moneySpentLabel::after {
+  content: '$';
+  position: absolute;
+  top: 3px;
+  left: 109px;
+}
+.modalInput {
+  margin-left: 0.5rem;
+}
+.moneySpentInput {
+  padding-left: 0.75rem;
+}
+.modalSaveBtn {
+  display: block;
+  cursor: pointer;
+  margin: 1rem auto 0 auto;
 }

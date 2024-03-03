@@ -18,7 +18,7 @@ export const CalendarDay = ({ day, todaysDate }) => {
 
   return (
     <td className='calendarCellContainer'>
-      <Modal>
+      <Modal classes={classes}>
         <CalendarData classes={classes} date={day.getDate()} />
       </Modal>
     </td>

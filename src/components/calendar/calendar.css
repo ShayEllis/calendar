@@ -2,22 +2,28 @@
   table-layout: fixed;
   width: 90%;
   border-collapse: collapse;
-  margin: 0 auto;
+  margin: 1rem auto;
 }
 
 .calendarHeading {
+  font-size: 2rem;
   padding: 1rem;
 }
 
 .dayHeading {
-  margin: 0 .125rem .25rem .125rem;
+  margin: 0 0.125rem 0.25rem 0.125rem;
   font-weight: normal;
 }
 
-.SAT, .SUN {
+.SAT,
+.SUN {
   background-color: var(--sat-sun-heading);
 }
 
-.MON, .TUE, .WED, .THU, .FRI {
+.MON,
+.TUE,
+.WED,
+.THU,
+.FRI {
   background-color: var(--mon-fri-heading);
 }

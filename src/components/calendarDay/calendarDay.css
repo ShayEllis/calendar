@@ -2,8 +2,12 @@
   border: 1px dashed var(--main-text);
 }
 .calendarCell {
+  position: relative;
   padding: 2px;
   aspect-ratio: 1 / 1;
+}
+.calendarCell:hover {
+  background-color: var(--calendar-day-highlight);
 }
 .currentDate {
   color: var(--current-day);
