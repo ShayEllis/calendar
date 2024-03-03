@@ -14,7 +14,7 @@ export const CalendarDay = ({ day, todaysDate }) => {
     } else {
       return 'calendarCell'
     }
-  }, [day])
+  }, [day, todaysDate])
 
   return (
     <td className='calendarCellContainer'>
@@ -26,6 +26,6 @@ export const CalendarDay = ({ day, todaysDate }) => {
 }
 
 CalendarDay.propTypes = {
-  day: PropTypes.object,
-  todaysDate: PropTypes.object,
+  day: PropTypes.object.isRequired,
+  todaysDate: PropTypes.object.isRequired,
 }

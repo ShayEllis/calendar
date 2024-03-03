@@ -4,22 +4,18 @@
   border-collapse: collapse;
   margin: 1rem auto;
 }
-
 .calendarHeading {
   font-size: 2rem;
   padding: 1rem;
 }
-
 .dayHeading {
   margin: 0 0.125rem 0.25rem 0.125rem;
   font-weight: normal;
 }
-
 .SAT,
 .SUN {
   background-color: var(--sat-sun-heading);
 }
-
 .MON,
 .TUE,
 .WED,

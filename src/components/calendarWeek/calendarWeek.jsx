@@ -12,7 +12,7 @@ export const CalendarWeek = ({ todaysDate, days, week }) => {
       dayArray.push(days[i])
     }
     return dayArray
-  }, [days])
+  }, [week, days])
 
   return (
     <tr>
@@ -24,7 +24,7 @@ export const CalendarWeek = ({ todaysDate, days, week }) => {
 }
 
 CalendarWeek.propTypes = {
-  todaysDate: PropTypes.object,
-  days: PropTypes.array,
-  week: PropTypes.number,
+  todaysDate: PropTypes.object.isRequired,
+  days: PropTypes.array.isRequired,
+  week: PropTypes.number.isRequired,
 }

@@ -1,4 +1,5 @@
 import { useRef, useState, cloneElement } from 'react'
+import PropTypes from 'prop-types'
 import './modal.css'
 
 export const Modal = ({ children, classes, buttonTxt = 'Open Modal' }) => {
@@ -19,11 +20,11 @@ export const Modal = ({ children, classes, buttonTxt = 'Open Modal' }) => {
   const handleInputChange = ({ target }) => {
     switch (target.name) {
       case 'moneySpent':
-      setDayData(target.value)
-      break
+        setDayData(target.value)
+        break
       case 'hasBackground':
-      setHighlightDay(!highlightDay)
-      break
+        setHighlightDay(!highlightDay)
+        break
       default:
         console.error(`No input with the name '${target.name}'`)
     }
@@ -67,15 +68,15 @@ export const Modal = ({ children, classes, buttonTxt = 'Open Modal' }) => {
           <details>
             <summary>Calendar Day Options</summary>
             <label className='modalLabel modalDetailsLabel'>
-            Highlight Day?
-            <input
-              type='checkbox'
-              name='hasBackground'
-              className='modalInput'
-              checked={highlightDay}
-              onChange={handleInputChange}
-            />
-          </label>
+              Highlight Day?
+              <input
+                type='checkbox'
+                name='hasBackground'
+                className='modalInput'
+                checked={highlightDay}
+                onChange={handleInputChange}
+              />
+            </label>
           </details>
         </div>
         <button className='modalSaveBtn' onClick={closeModal}>
@@ -84,4 +85,10 @@ export const Modal = ({ children, classes, buttonTxt = 'Open Modal' }) => {
       </dialog>
     </div>
   )
+}
+
+Modal.propTypes = {
+  children: PropTypes.element.isRequired,
+  classes: PropTypes.string.isRequired,
+  buttonTxt: PropTypes.string,
 }

@@ -14,21 +14,15 @@
   margin: 0 auto;
   width: fit-content;
 }
-/* .inputContainer .modalLabel:not(:first-child) {
-  padding-top: 0.5rem;
-} */
 details {
   padding-top: 0.5rem;
 }
-/* details[open] {
-  border: none;
-} */
 summary {
   border-bottom: 1px solid black;
   width: fit-content;
 }
 .modalDetailsLabel {
-  margin: .25rem 1rem;
+  margin: 0.25rem 1rem;
 }
 .modalLabel {
   display: flex;
