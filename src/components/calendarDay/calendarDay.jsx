@@ -17,11 +17,11 @@ export const CalendarDay = ({ day, todaysDate, calendarMonth }) => {
     } else {
       return 'calendarCell'
     }
-  }, [day, todaysDate])
+  }, [day, todaysDate, calendarMonth])
 
   return (
     <td className='calendarCellContainer'>
-      <Modal classes={classes}>
+      <Modal classes={classes} day={day}>
         <CalendarData classes={classes} date={day.getDate()} />
       </Modal>
     </td>
@@ -31,5 +31,5 @@ export const CalendarDay = ({ day, todaysDate, calendarMonth }) => {
 CalendarDay.propTypes = {
   day: PropTypes.object.isRequired,
   todaysDate: PropTypes.object.isRequired,
-  calendarMonth: PropTypes.object.isRequired
+  calendarMonth: PropTypes.object.isRequired,
 }

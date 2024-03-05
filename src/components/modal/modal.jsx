@@ -1,11 +1,11 @@
-import { useRef, useState, cloneElement } from 'react'
+import { useRef, useState, cloneElement, useReducer } from 'react'
 import PropTypes from 'prop-types'
 import './modal.css'
+import { createInitalState, reducer } from '../../reducers/modalReducer'
 
-export const Modal = ({ children, classes, buttonTxt = 'Open Modal' }) => {
+export const Modal = ({ children, classes, day, buttonTxt = 'Open Modal' }) => {
   const modalRef = useRef(null)
-  const [dayData, setDayData] = useState('')
-  const [highlightDay, setHighlightDay] = useState(false)
+  const [state, dispatch] = useReducer(reducer, day, createInitalState) //useReducer(reducer, arguments, func to return inital state)
 
   const showModal = () => {
     modalRef.current.showModal()
@@ -18,10 +18,10 @@ export const Modal = ({ children, classes, buttonTxt = 'Open Modal' }) => {
   const handleInputChange = ({ target }) => {
     switch (target.name) {
       case 'moneySpent':
-        setDayData(target.value)
+        dispatch({ type: 'changeDayData', payload: target.value })
         break
       case 'hasBackground':
-        setHighlightDay(!highlightDay)
+        dispatch({ type: 'changeHighlightDay', payload: !state.highlightDay })
         break
       default:
         console.error(`No input with the name '${target.name}'`)
@@ -37,10 +37,11 @@ export const Modal = ({ children, classes, buttonTxt = 'Open Modal' }) => {
       {children ? (
         <div
           id='showModal'
-          onClick={
-            classes.includes('notCurrentMonth') ? undefined : showModal
-          }>
-          {cloneElement(children, { data: dayData, highlightDay })}
+          onClick={classes.includes('notCurrentMonth') ? undefined : showModal}>
+          {cloneElement(children, {
+            dayData: state.dayData,
+            highlightDay: state.highlightDay,
+          })}
         </div>
       ) : (
         <button id='showModal' onClick={showModal}>
@@ -59,7 +60,7 @@ export const Modal = ({ children, classes, buttonTxt = 'Open Modal' }) => {
               type='number'
               className='modalInput moneySpentInput'
               name='moneySpent'
-              value={dayData}
+              value={state.dayData}
               onChange={handleInputChange}
             />
           </label>
@@ -71,7 +72,7 @@ export const Modal = ({ children, classes, buttonTxt = 'Open Modal' }) => {
                 type='checkbox'
                 name='hasBackground'
                 className='modalInput'
-                checked={highlightDay}
+                checked={state.highlightDay}
                 onChange={handleInputChange}
               />
             </label>

@@ -11,7 +11,7 @@ export const generateCalendarDays = (currentDate) => {
       startOfCalendar.getDate() - startOfCalendar.getDay()
     )
   }
-  // Map the number of days in the calendar and create an array to build the calendar from
+  // Map the max number of days in the calendar and create an array to build the calendar from
   return Array(42)
     .fill(null)
     .map(() => {

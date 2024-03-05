@@ -97,7 +97,7 @@ export const Calendar = () => {
           .fill(null)
           .map((week, idx) => (
             <CalendarWeek
-              key={`${calendarMonth.getMonth()}${idx}`}
+              key={`${calendarMonth.getMonth()}${calendarMonth.getFullYear()}${idx}`}
               calendarMonth={calendarMonth}
               todaysDate={todaysDate}
               days={days}

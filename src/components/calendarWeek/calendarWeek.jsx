@@ -19,7 +19,7 @@ export const CalendarWeek = ({ calendarMonth, todaysDate, days, week }) => {
       {daysInWeek.map((day, idx) => {
         return (
           <CalendarDay
-            key={`${day.getMonth()}${idx}`}
+            key={`${day.getMonth()}${day.getFullYear()}${idx}`}
             day={day}
             calendarMonth={calendarMonth}
             todaysDate={todaysDate}
