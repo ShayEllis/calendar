@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import './calendarWeek.css'
 import { CalendarDay } from '../calendarDay/calendarDay'
 
-export const CalendarWeek = ({ todaysDate, days, week }) => {
+export const CalendarWeek = ({ calendarMonth, todaysDate, days, week }) => {
   // Create an array of days in this specific week
   const daysInWeek = useMemo(() => {
     const dayArray = []
@@ -17,13 +17,21 @@ export const CalendarWeek = ({ todaysDate, days, week }) => {
   return (
     <tr>
       {daysInWeek.map((day, idx) => {
-        return <CalendarDay key={idx} day={day} todaysDate={todaysDate} />
+        return (
+          <CalendarDay
+            key={`${day.getMonth()}${idx}`}
+            day={day}
+            calendarMonth={calendarMonth}
+            todaysDate={todaysDate}
+          />
+        )
       })}
     </tr>
   )
 }
 
 CalendarWeek.propTypes = {
+  calendarMonth: PropTypes.object.isRequired,
   todaysDate: PropTypes.object.isRequired,
   days: PropTypes.array.isRequired,
   week: PropTypes.number.isRequired,

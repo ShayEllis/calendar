@@ -6,8 +6,6 @@ export const Modal = ({ children, classes, buttonTxt = 'Open Modal' }) => {
   const modalRef = useRef(null)
   const [dayData, setDayData] = useState('')
   const [highlightDay, setHighlightDay] = useState(false)
-  // esLint in IDE gave an error when the prop was directly used
-  const classesPassed = classes
 
   const showModal = () => {
     modalRef.current.showModal()
@@ -40,7 +38,7 @@ export const Modal = ({ children, classes, buttonTxt = 'Open Modal' }) => {
         <div
           id='showModal'
           onClick={
-            classesPassed.includes('notCurrentMonth') ? undefined : showModal
+            classes.includes('notCurrentMonth') ? undefined : showModal
           }>
           {cloneElement(children, { data: dayData, highlightDay })}
         </div>

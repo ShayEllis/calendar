@@ -4,13 +4,38 @@
   border-collapse: collapse;
   margin: 1rem auto;
 }
+.headingContainer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 69px;
+}
 .calendarHeading {
+  display: inline-block;
+  flex-shrink: 0;
   font-size: 2rem;
   padding: 1rem;
+  margin: 0;
 }
 .dayHeading {
   margin: 0 0.125rem 0.25rem 0.125rem;
   font-weight: normal;
+}
+.arrowContainer {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  min-width: 0;
+  padding: 0.75rem;
+}
+.arrow {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  padding: 0.5rem;
+}
+.previousArrow {
+  transform: rotate(180deg);
 }
 .SAT,
 .SUN {

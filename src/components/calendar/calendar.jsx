@@ -1,9 +1,12 @@
+import { useState } from 'react'
 import { CalendarWeek } from '../calendarWeek/calendarWeek'
+import Arrow from '../../assets/arrow.png'
 import './calendar.css'
 import { generateCalendarDays } from '../../utils/utils'
 
 export const Calendar = () => {
-  // Create a new date object that weill be used later.
+  const [calendarMonth, setCalendarMonth] = useState(new Date())
+  // Create a new date object that will be used later.
   const todaysDate = new Date()
   // Array of days and months that will be used to generate the calendar.
   const weekDays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
@@ -24,23 +27,62 @@ export const Calendar = () => {
   // Calculate the number of weeks to show in the calendar
   const numOfWeeks = Math.ceil(
     (new Date(
-      todaysDate.getFullYear(),
-      todaysDate.getMonth() + 1,
+      calendarMonth.getFullYear(),
+      calendarMonth.getMonth() + 1,
       0
     ).getDate() +
-      todaysDate.getDay()) /
+      new Date(
+        calendarMonth.getFullYear(),
+        calendarMonth.getMonth(),
+        1
+      ).getDay()) /
       7
   )
   // Use utils function to generate the days in the calender
-  const days = generateCalendarDays(todaysDate)
+  const days = generateCalendarDays(calendarMonth)
+
+  const handlePreviousArrowClick = () => {
+    setCalendarMonth(
+      (pre) => new Date(pre.getFullYear(), pre.getMonth() - 1, 1)
+    )
+  }
+
+  const handleNextArrowClick = () => {
+    setCalendarMonth(
+      (pre) => new Date(pre.getFullYear(), pre.getMonth() + 1, 1)
+    )
+  }
 
   return (
     <table id='calendar'>
       <thead>
         <tr>
-          <th className='calendarHeading' colSpan={7}>{`${
-            months[todaysDate.getMonth()]
-          } ${todaysDate.getFullYear()}`}</th>
+          <th colSpan={7}>
+            <div className='headingContainer'>
+              <div className='arrowContainer'>
+                <img
+                  src={Arrow}
+                  alt='Previous Month'
+                  className='arrow previousArrow'
+                  onClick={handlePreviousArrowClick}
+                />
+              </div>
+
+              <h2 className='calendarHeading'>
+                {`${
+                  months[calendarMonth.getMonth()]
+                } ${calendarMonth.getFullYear()}`}
+              </h2>
+              <div className='arrowContainer'>
+                <img
+                  src={Arrow}
+                  alt='Next Month'
+                  className='arrow nextArrow'
+                  onClick={handleNextArrowClick}
+                />
+              </div>
+            </div>
+          </th>
         </tr>
         <tr>
           {weekDays.map((day) => (
@@ -55,7 +97,8 @@ export const Calendar = () => {
           .fill(null)
           .map((week, idx) => (
             <CalendarWeek
-              key={idx}
+              key={`${calendarMonth.getMonth()}${idx}`}
+              calendarMonth={calendarMonth}
               todaysDate={todaysDate}
               days={days}
               week={idx}

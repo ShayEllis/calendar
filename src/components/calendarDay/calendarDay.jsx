@@ -4,12 +4,15 @@ import './calendarDay.css'
 import { Modal } from '../modal/modal'
 import { CalendarData } from '../calendarData/calendarData'
 
-export const CalendarDay = ({ day, todaysDate }) => {
+export const CalendarDay = ({ day, todaysDate, calendarMonth }) => {
   // Set differnet styles for the current day of the month and any days that are not part of the current month
   const classes = useMemo(() => {
-    if (todaysDate.getMonth() !== day.getMonth()) {
+    if (calendarMonth.getMonth() !== day.getMonth()) {
       return 'notCurrentMonth calendarCell'
-    } else if (todaysDate.getDate() === day.getDate()) {
+    } else if (
+      `${todaysDate.getMonth()}${todaysDate.getDate()}${todaysDate.getFullYear()}` ===
+      `${day.getMonth()}${day.getDate()}${day.getFullYear()}`
+    ) {
       return 'currentDate calendarCell'
     } else {
       return 'calendarCell'
@@ -28,4 +31,5 @@ export const CalendarDay = ({ day, todaysDate }) => {
 CalendarDay.propTypes = {
   day: PropTypes.object.isRequired,
   todaysDate: PropTypes.object.isRequired,
+  calendarMonth: PropTypes.object.isRequired
 }
