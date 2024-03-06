@@ -1,11 +1,17 @@
-import { useRef, useState, cloneElement, useReducer } from 'react'
+import { useRef, cloneElement, useReducer } from 'react'
 import PropTypes from 'prop-types'
 import './modal.css'
 import { createInitalState, reducer } from '../../reducers/modalReducer'
 
+// This is a Modal wrapper component that will allow data to be entered on each calendar day
 export const Modal = ({ children, classes, day, buttonTxt = 'Open Modal' }) => {
+  // Reference to the modal so that it can be opened and closed
   const modalRef = useRef(null)
-  const [state, dispatch] = useReducer(reducer, day, createInitalState) //useReducer(reducer, arguments, func to return inital state)
+  /*  
+    Reducer for managing the state of the input elements, I chose this approach so that the data 
+    could be saved when the month is changed which unmounts the day components. 
+  */
+  const [state, dispatch] = useReducer(reducer, day, createInitalState)
 
   const showModal = () => {
     modalRef.current.showModal()
@@ -15,19 +21,27 @@ export const Modal = ({ children, classes, day, buttonTxt = 'Open Modal' }) => {
     modalRef.current.close()
   }
 
+  // When data in an input is change this will check the name of the input field and send the correct action to the reducer
   const handleInputChange = ({ target }) => {
     switch (target.name) {
       case 'moneySpent':
-        dispatch({ type: 'changeDayData', payload: target.value })
+        dispatch({
+          type: 'changeDayData',
+          payload: { day, value: target.value },
+        })
         break
       case 'hasBackground':
-        dispatch({ type: 'changeHighlightDay', payload: !state.highlightDay })
+        dispatch({
+          type: 'changeHighlightDay',
+          payload: { day, value: !state.highlightDay },
+        })
         break
       default:
         console.error(`No input with the name '${target.name}'`)
     }
   }
 
+  // Allows the modal to be closed when the enter key on the keyboard is pressed
   const handleKeyDown = ({ key }) => {
     if (key === 'Enter') closeModal()
   }
@@ -90,4 +104,5 @@ Modal.propTypes = {
   children: PropTypes.element.isRequired,
   classes: PropTypes.string.isRequired,
   buttonTxt: PropTypes.string,
+  day: PropTypes.object.isRequired,
 }

@@ -5,8 +5,9 @@ import './calendar.css'
 import { generateCalendarDays } from '../../utils/utils'
 
 export const Calendar = () => {
+  // Initialize state to a new date object that will be used later to generate the days of the month
   const [calendarMonth, setCalendarMonth] = useState(new Date())
-  // Create a new date object that will be used later.
+  // Create a new date object that will be used to reference the current day.
   const todaysDate = new Date()
   // Array of days and months that will be used to generate the calendar.
   const weekDays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']

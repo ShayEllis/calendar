@@ -17,6 +17,6 @@ export const CalendarData = ({ classes, date, dayData, highlightDay }) => {
 CalendarData.propTypes = {
   classes: PropTypes.string.isRequired,
   date: PropTypes.number.isRequired,
-  data: PropTypes.string,
+  dayData: PropTypes.string,
   highlightDay: PropTypes.bool,
 }
