@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import { CalendarWeek } from '../calendarWeek/calendarWeek'
 import Arrow from '../../assets/arrow.png'
 import './calendar.css'
 import { generateCalendarDays } from '../../utils/utils'
+import { CalendarWeek } from '../calendarWeek/calendarWeek'
+import { Modal } from '../modal/modal'
 
 export const Calendar = () => {
   // Initialize state to a new date object that will be used later to generate the days of the month
@@ -54,11 +55,16 @@ export const Calendar = () => {
     )
   }
 
+  const handleDayClick = ({ target }, day) => {
+    console.log(target, day)
+  }
+
   return (
     <table id='calendar'>
       <thead>
         <tr>
           <th colSpan={7}>
+            <Modal />
             <div className='headingContainer'>
               <div className='arrowContainer'>
                 <img
@@ -103,6 +109,7 @@ export const Calendar = () => {
               todaysDate={todaysDate}
               days={days}
               week={idx}
+              handleDayClick={handleDayClick}
             />
           ))}
       </tbody>

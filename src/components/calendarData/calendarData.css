@@ -12,6 +12,7 @@
 .calendarData {
   color: red;
   font-weight: bold;
+  font-size: 2rem;
   margin: 0.25rem;
   overflow: hidden;
   text-overflow: ellipsis;
