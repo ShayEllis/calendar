@@ -20,3 +20,7 @@ export const generateCalendarDays = (currentDate) => {
       return currentDay
     })
 }
+
+export const getDayIdentifier = (dayObj) => {
+  return `${dayObj.getMonth()}${dayObj.getDate()}${dayObj.getFullYear()}`
+}

@@ -1,21 +1,22 @@
 import PropTypes from 'prop-types'
 import './calendarData.css'
 
-export const CalendarData = ({ classes, date, dayData, highlightDay }) => {
+//className={classes}
+
+export const CalendarData = ({ date, dayData }) => {
   return (
-    <div className={classes}>
+    <>
       <span className='calendarDate'>{date}</span>
       <div
         className='calendarDataContainer'
-        style={highlightDay ? { backgroundColor: '#5BBB60' } : undefined}>
-        {!!dayData && <div className='calendarData'>{`$${dayData}`}</div>}
+        style={dayData?.highlighted ? { backgroundColor: '#5BBB60' } : undefined}>
+        {!!dayData && <div className='calendarData'>{`$${dayData.data}`}</div>}
       </div>
-    </div>
+    </>
   )
 }
 
 CalendarData.propTypes = {
-  classes: PropTypes.string.isRequired,
   date: PropTypes.number.isRequired,
   dayData: PropTypes.string,
   highlightDay: PropTypes.bool,

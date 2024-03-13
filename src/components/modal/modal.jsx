@@ -1,17 +1,11 @@
-import { useRef, cloneElement, useReducer } from 'react'
+import { useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import './modal.css'
-import { createInitalState, reducer } from '../../reducers/modalReducer'
 
 // This is a Modal wrapper component that will allow data to be entered on each calendar day
-export const Modal = ({ classes, day, buttonTxt = 'Open Modal' }) => {
+export const Modal = ({ handleInputChange, selectedDay, dayData }) => {
   // Reference to the modal so that it can be opened and closed
   const modalRef = useRef(null)
-  /*  
-    Reducer for managing the state of the input elements, I chose this approach so that the data 
-    could be saved when the month is changed which unmounts the day components. 
-  */
-  // const [state, dispatch] = useReducer(reducer, day, createInitalState)
 
   const showModal = () => {
     modalRef.current.showModal()
@@ -21,25 +15,11 @@ export const Modal = ({ classes, day, buttonTxt = 'Open Modal' }) => {
     modalRef.current.close()
   }
 
-  // When data in an input is change this will check the name of the input field and send the correct action to the reducer
-  const handleInputChange = ({ target }) => {
-    switch (target.name) {
-      case 'moneySpent':
-        dispatch({
-          type: 'changeDayData',
-          payload: { day, value: target.value },
-        })
-        break
-      case 'hasBackground':
-        dispatch({
-          type: 'changeHighlightDay',
-          payload: { day, value: !state.highlightDay },
-        })
-        break
-      default:
-        console.error(`No input with the name '${target.name}'`)
+  useEffect(() => {
+    if (selectedDay) {
+      showModal()
     }
-  }
+  })
 
   // Allows the modal to be closed when the enter key on the keyboard is pressed
   const handleKeyDown = ({ key }) => {
@@ -60,8 +40,8 @@ export const Modal = ({ classes, day, buttonTxt = 'Open Modal' }) => {
               type='number'
               className='modalInput moneySpentInput'
               name='moneySpent'
-              value={1} //state.dayData
-              onChange={handleInputChange}
+              value={dayData.data}
+              onChange={(event) => handleInputChange(event, selectedDay)}
             />
           </label>
           <details>
@@ -72,8 +52,8 @@ export const Modal = ({ classes, day, buttonTxt = 'Open Modal' }) => {
                 type='checkbox'
                 name='hasBackground'
                 className='modalInput'
-                checked={1} //state.highlightDay
-                onChange={handleInputChange}
+                checked={dayData.highlightedDay}
+                onChange={(event) => handleInputChange(event, selectedDay)}
               />
             </label>
           </details>

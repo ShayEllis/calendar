@@ -1,10 +1,17 @@
-// import { useMemo, useState, useEffect} from "react"
 import { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import './calendarWeek.css'
 import { CalendarDay } from '../calendarDay/calendarDay'
+import { getDayIdentifier } from '../../utils/utils'
 
-export const CalendarWeek = ({ calendarMonth, todaysDate, days, week, handleDayClick }) => {
+export const CalendarWeek = ({
+  calendarMonth,
+  todaysDate,
+  days,
+  week,
+  handleDayClick,
+  dayData
+}) => {
   // Create an array of days in this specific week
   const daysInWeek = useMemo(() => {
     const dayArray = []
@@ -19,11 +26,12 @@ export const CalendarWeek = ({ calendarMonth, todaysDate, days, week, handleDayC
       {daysInWeek.map((day) => {
         return (
           <CalendarDay
-            key={`${day.getMonth()}${day.getDate()}${day.getFullYear()}`}
+            key={getDayIdentifier(day)}
             day={day}
             calendarMonth={calendarMonth}
             todaysDate={todaysDate}
             handleDayClick={handleDayClick}
+            dayData={dayData}
           />
         )
       })}
@@ -36,4 +44,5 @@ CalendarWeek.propTypes = {
   todaysDate: PropTypes.object.isRequired,
   days: PropTypes.array.isRequired,
   week: PropTypes.number.isRequired,
+  handleDayClick: PropTypes.func.isRequired,
 }
