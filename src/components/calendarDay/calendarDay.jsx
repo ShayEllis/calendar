@@ -1,32 +1,32 @@
-import { useMemo } from 'react'
+import { useContext, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import './calendarDay.css'
 import { CalendarData } from '../calendarData/calendarData'
 import { getDayIdentifier } from '../../utils/utils'
+import { handleDayClick } from '../../actions/appAction'
+import { StateContext } from '../../context/stateContext'
 
-export const CalendarDay = ({
-  day,
-  todaysDate,
-  calendarMonth,
-  handleDayClick,
-  dayData
-}) => {
+export const CalendarDay = ({ day }) => {
+  const state = useContext(StateContext)
+
   // Set differnet styles for the current day of the month and any days that are not part of the current month
   const classes = useMemo(() => {
-    if (calendarMonth.getMonth() !== day.getMonth()) {
+    if (state.calendarMonth.getMonth() !== day.getMonth()) {
       return 'notCurrentMonth calendarCell'
-    } else if (getDayIdentifier(todaysDate) === getDayIdentifier(day)) {
+    } else if (getDayIdentifier(state.todaysDate) === getDayIdentifier(day)) {
       return 'currentDate calendarCell'
     } else {
       return 'calendarCell'
     }
-  }, [day, todaysDate, calendarMonth])
-  console.log(dayData)
+  }, [day, state.todaysDate, state.calendarMonth])
 
   return (
     <td className='calendarCellContainer'>
       <div className={classes} onClick={() => handleDayClick(day)}>
-        <CalendarData date={day.getDate()} dayData={dayData[getDayIdentifier(day)]} />
+        <CalendarData
+          date={day.getDate()}
+          dayData={state.dayData[getDayIdentifier(day)]}
+        />
       </div>
     </td>
   )
@@ -34,7 +34,4 @@ export const CalendarDay = ({
 
 CalendarDay.propTypes = {
   day: PropTypes.object.isRequired,
-  todaysDate: PropTypes.object.isRequired,
-  calendarMonth: PropTypes.object.isRequired,
-  handleDayClick: PropTypes.func.isRequired,
 }

@@ -4,14 +4,7 @@ import './calendarWeek.css'
 import { CalendarDay } from '../calendarDay/calendarDay'
 import { getDayIdentifier } from '../../utils/utils'
 
-export const CalendarWeek = ({
-  calendarMonth,
-  todaysDate,
-  days,
-  week,
-  handleDayClick,
-  dayData
-}) => {
+export const CalendarWeek = ({ days, week }) => {
   // Create an array of days in this specific week
   const daysInWeek = useMemo(() => {
     const dayArray = []
@@ -24,25 +17,13 @@ export const CalendarWeek = ({
   return (
     <tr>
       {daysInWeek.map((day) => {
-        return (
-          <CalendarDay
-            key={getDayIdentifier(day)}
-            day={day}
-            calendarMonth={calendarMonth}
-            todaysDate={todaysDate}
-            handleDayClick={handleDayClick}
-            dayData={dayData}
-          />
-        )
+        return <CalendarDay key={getDayIdentifier(day)} day={day} />
       })}
     </tr>
   )
 }
 
 CalendarWeek.propTypes = {
-  calendarMonth: PropTypes.object.isRequired,
-  todaysDate: PropTypes.object.isRequired,
   days: PropTypes.array.isRequired,
   week: PropTypes.number.isRequired,
-  handleDayClick: PropTypes.func.isRequired,
 }

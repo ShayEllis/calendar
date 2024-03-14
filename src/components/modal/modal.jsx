@@ -1,9 +1,14 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
 import './modal.css'
+import { modalInputChange } from '../../actions/appAction'
+import { StateContext } from '../../context/stateContext'
 
 // This is a Modal wrapper component that will allow data to be entered on each calendar day
-export const Modal = ({ handleInputChange, selectedDay, dayData }) => {
+export const Modal = () => {
+  const state = useContext(StateContext)
+
+  // if (!dayData[selectedDay]) modalInputChange('initializeDayData', selectedDay)
   // Reference to the modal so that it can be opened and closed
   const modalRef = useRef(null)
 
@@ -16,7 +21,7 @@ export const Modal = ({ handleInputChange, selectedDay, dayData }) => {
   }
 
   useEffect(() => {
-    if (selectedDay) {
+    if (state.selectedDay) {
       showModal()
     }
   })
@@ -40,8 +45,8 @@ export const Modal = ({ handleInputChange, selectedDay, dayData }) => {
               type='number'
               className='modalInput moneySpentInput'
               name='moneySpent'
-              value={dayData.data}
-              onChange={(event) => handleInputChange(event, selectedDay)}
+              value={state.dayData[state.selectedDay]?.data}
+              onChange={(event) => modalInputChange(event, state.selectedDay)}
             />
           </label>
           <details>
@@ -52,8 +57,8 @@ export const Modal = ({ handleInputChange, selectedDay, dayData }) => {
                 type='checkbox'
                 name='hasBackground'
                 className='modalInput'
-                checked={dayData.highlightedDay}
-                onChange={(event) => handleInputChange(event, selectedDay)}
+                checked={state.dayData[state.selectedDay]?.highlightedDay}
+                onChange={(event) => modalInputChange(event, state.selectedDay)}
               />
             </label>
           </details>

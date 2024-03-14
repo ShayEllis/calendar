@@ -1,5 +1,6 @@
 import { getDayIdentifier } from '../utils/utils'
 
+// Initial state
 export const initialState = {
   todaysDate: new Date(),
   calendarMonth: new Date(),
@@ -7,9 +8,10 @@ export const initialState = {
   selectedDay: null,
 }
 
+// Reducers
 export const reducer = (state, action) => {
   switch (action.type) {
-    case 'previousMonth': {
+    case 'calendar/previousMonth': {
       return {
         ...state,
         calendarMonth: new Date(
@@ -19,34 +21,50 @@ export const reducer = (state, action) => {
         ),
       }
     }
-    case 'nextMonth': {
+    case 'calendar/nextMonth': {
       return {
         ...state,
         calendarMonth: new Date(
           state.calendarMonth.getFullYear(),
-          state.calendarMonth.getMonth() - 1,
+          state.calendarMonth.getMonth() + 1,
           1
         ),
       }
     }
-    case 'dayClick': {
+    case 'day/dayClick': {
+      console.log(action.payload)
       return { ...state, selectedDay: action.payload }
     }
-    case 'changeDayData': {
+    case 'modal/initializeDayData': {
       return {
         ...state,
         dayData: {
           ...state.dayData,
-          [action.payload.dayIdentifier]: {...state.dayData[action.payload.dayIdentifier], data: action.payload.value},
+          [action.payoad.dayIdentifier]: { inputVal: '', background: false },
         },
       }
     }
-    case 'changeHighlightDay': {
+    case 'modal/changeDayInputVal': {
       return {
         ...state,
         dayData: {
           ...state.dayData,
-          [action.payload.dayIdentifier]: {...state.dayData[action.payload.dayIdentifier], highlighted: action.payload.value},
+          [action.payload.dayIdentifier]: {
+            ...state.dayData[action.payload.dayIdentifier],
+            data: action.payload.value,
+          },
+        },
+      }
+    }
+    case 'modal/changeBackground': {
+      return {
+        ...state,
+        dayData: {
+          ...state.dayData,
+          [action.payload.dayIdentifier]: {
+            ...state.dayData[action.payload.dayIdentifier],
+            highlighted: action.payload.value,
+          },
         },
       }
     }

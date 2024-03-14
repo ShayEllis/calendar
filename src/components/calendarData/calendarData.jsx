@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types'
 import './calendarData.css'
 
-//className={classes}
-
 export const CalendarData = ({ date, dayData }) => {
   return (
     <>
