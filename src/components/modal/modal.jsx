@@ -1,12 +1,14 @@
 import { useRef, useEffect, useContext } from 'react'
-import PropTypes from 'prop-types'
 import './modal.css'
-import { modalInputChange } from '../../actions/appAction'
-import { StateContext } from '../../context/stateContext'
+import {
+  CalendarContext,
+  CalendarDispatchContext,
+} from '../../context/calendarContexts'
 
 // This is a Modal wrapper component that will allow data to be entered on each calendar day
 export const Modal = () => {
-  const state = useContext(StateContext)
+  const state = useContext(CalendarContext)
+  const dispatch = useContext(CalendarDispatchContext)
 
   // if (!dayData[selectedDay]) modalInputChange('initializeDayData', selectedDay)
   // Reference to the modal so that it can be opened and closed
@@ -18,10 +20,39 @@ export const Modal = () => {
 
   const closeModal = () => {
     modalRef.current.close()
+    dispatch({ type: 'modal/clearSelectedDay' })
+  }
+
+  const clearInputValues = () => {
+    dispatch({ type: 'modal/clearInputValues', payload: state.selectedDay })
+  }
+
+  const modalInputChange = (event, dayIdentifier) => {
+    switch (event.target.name) {
+      case 'moneySpent':
+        dispatch({
+          type: 'modal/changeDayInputVal',
+          payload: { dayIdentifier, value: event.target.value },
+        })
+        break
+      case 'hasBackground':
+        dispatch({
+          type: 'modal/changeBackground',
+          payload: {
+            dayIdentifier,
+            value: !state.dayData[dayIdentifier].background,
+          },
+        })
+        break
+      default:
+        console.error(`No input with the name '${event.target.name}'`)
+    }
   }
 
   useEffect(() => {
     if (state.selectedDay) {
+      if (!state.dayData[state.selectedDay])
+        dispatch({ type: 'modal/initializeDayData' })
       showModal()
     }
   })
@@ -45,7 +76,7 @@ export const Modal = () => {
               type='number'
               className='modalInput moneySpentInput'
               name='moneySpent'
-              value={state.dayData[state.selectedDay]?.data}
+              value={state.dayData[state.selectedDay].inputVal}
               onChange={(event) => modalInputChange(event, state.selectedDay)}
             />
           </label>
@@ -57,7 +88,7 @@ export const Modal = () => {
                 type='checkbox'
                 name='hasBackground'
                 className='modalInput'
-                checked={state.dayData[state.selectedDay]?.highlightedDay}
+                checked={state.dayData[state.selectedDay].background}
                 onChange={(event) => modalInputChange(event, state.selectedDay)}
               />
             </label>
@@ -66,14 +97,10 @@ export const Modal = () => {
         <button className='modalSaveBtn' onClick={closeModal}>
           Save
         </button>
+        <button className='modalSaveBtn' onClick={clearInputValues}>
+          Clear
+        </button>
       </dialog>
     </div>
   )
 }
-
-// Modal.propTypes = {
-//   children: PropTypes.element.isRequired,
-//   classes: PropTypes.string.isRequired,
-//   buttonTxt: PropTypes.string,
-//   day: PropTypes.object.isRequired,
-// }

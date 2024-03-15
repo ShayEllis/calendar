@@ -1,5 +1,3 @@
-import { getDayIdentifier } from '../utils/utils'
-
 // Initial state
 export const initialState = {
   todaysDate: new Date(),
@@ -32,15 +30,28 @@ export const reducer = (state, action) => {
       }
     }
     case 'day/dayClick': {
-      console.log(action.payload)
-      return { ...state, selectedDay: action.payload }
+      if (!state.dayData[action.payload]) {
+        return {
+          ...state,
+          selectedDay: action.payload,
+          dayData: {
+            ...state.dayData,
+            [action.payload]: { inputVal: 0, background: false },
+          },
+        }
+      } else {
+        return { ...state, selectedDay: action.payload }
+      }
     }
-    case 'modal/initializeDayData': {
+    case 'modal/clearSelectedDay': {
+      return { ...state, selectedDay: null }
+    }
+    case 'modal/clearInputValues': {
       return {
         ...state,
         dayData: {
           ...state.dayData,
-          [action.payoad.dayIdentifier]: { inputVal: '', background: false },
+          [action.payload]: { inputVal: 0, background: false },
         },
       }
     }
@@ -51,7 +62,7 @@ export const reducer = (state, action) => {
           ...state.dayData,
           [action.payload.dayIdentifier]: {
             ...state.dayData[action.payload.dayIdentifier],
-            data: action.payload.value,
+            inputVal: action.payload.value,
           },
         },
       }
@@ -63,7 +74,7 @@ export const reducer = (state, action) => {
           ...state.dayData,
           [action.payload.dayIdentifier]: {
             ...state.dayData[action.payload.dayIdentifier],
-            highlighted: action.payload.value,
+            background: action.payload.value,
           },
         },
       }

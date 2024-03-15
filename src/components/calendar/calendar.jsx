@@ -5,13 +5,13 @@ import { generateCalendarDays } from '../../utils/utils'
 import { CalendarWeek } from '../calendarWeek/calendarWeek'
 import { Modal } from '../modal/modal'
 import {
-  handlePreviousArrowClick,
-  handleNextArrowClick,
-} from '../../actions/appAction'
-import { StateContext } from '../../context/stateContext'
+  CalendarContext,
+  CalendarDispatchContext,
+} from '../../context/calendarContexts'
 
 export const Calendar = () => {
-  const state = useContext(StateContext)
+  const state = useContext(CalendarContext)
+  const dispatch = useContext(CalendarDispatchContext)
   // Array of days and months that will be used to generate the calendar.
   const weekDays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
   const months = [
@@ -45,15 +45,23 @@ export const Calendar = () => {
   // Use utils function to generate the days in the calender
   const days = generateCalendarDays(state.calendarMonth)
 
+  const handlePreviousArrowClick = () => {
+    dispatch({ type: 'calendar/previousMonth' })
+  }
+
+  const handleNextArrowClick = () => {
+    dispatch({ type: 'calendar/nextMonth' })
+  }
+
   return (
     <table id='calendar'>
       <thead>
         <tr>
           <th colSpan={7}>
-            <Modal
+            {state.selectedDay && <Modal
               selectedDay={state.selectedDay}
               dayData={state.dayData ? state.dayData : undefined}
-            />
+            />}
             <div className='headingContainer'>
               <div className='arrowContainer'>
                 <img

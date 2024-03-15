@@ -7,8 +7,12 @@ export const CalendarData = ({ date, dayData }) => {
       <span className='calendarDate'>{date}</span>
       <div
         className='calendarDataContainer'
-        style={dayData?.highlighted ? { backgroundColor: '#5BBB60' } : undefined}>
-        {!!dayData && <div className='calendarData'>{`$${dayData.data}`}</div>}
+        style={
+          dayData?.background ? { backgroundColor: '#5BBB60' } : undefined
+        }>
+        {!!dayData?.inputVal && (
+          <div className='calendarData'>{`$${dayData.inputVal}`}</div>
+        )}
       </div>
     </>
   )
@@ -16,6 +20,6 @@ export const CalendarData = ({ date, dayData }) => {
 
 CalendarData.propTypes = {
   date: PropTypes.number.isRequired,
-  dayData: PropTypes.string,
+  dayData: PropTypes.object,
   highlightDay: PropTypes.bool,
 }

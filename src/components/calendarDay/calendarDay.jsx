@@ -3,11 +3,20 @@ import PropTypes from 'prop-types'
 import './calendarDay.css'
 import { CalendarData } from '../calendarData/calendarData'
 import { getDayIdentifier } from '../../utils/utils'
-import { handleDayClick } from '../../actions/appAction'
-import { StateContext } from '../../context/stateContext'
+import {
+  CalendarContext,
+  CalendarDispatchContext,
+} from '../../context/calendarContexts'
 
 export const CalendarDay = ({ day }) => {
-  const state = useContext(StateContext)
+  const state = useContext(CalendarContext)
+  const dispatch = useContext(CalendarDispatchContext)
+
+  const handleDayClick = (day) => {
+    const dayIdentifier = getDayIdentifier(day)
+
+    dispatch({ type: 'day/dayClick', payload: dayIdentifier })
+  }
 
   // Set differnet styles for the current day of the month and any days that are not part of the current month
   const classes = useMemo(() => {
