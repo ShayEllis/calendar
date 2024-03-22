@@ -58,10 +58,12 @@ export const Calendar = () => {
       <thead>
         <tr>
           <th colSpan={7}>
-            {state.selectedDay && <Modal
-              selectedDay={state.selectedDay}
-              dayData={state.dayData ? state.dayData : undefined}
-            />}
+            {state.selectedDay && (
+              <Modal
+                selectedDay={state.selectedDay}
+                dayData={state.dayData ? state.dayData : undefined}
+              />
+            )}
             <div className='headingContainer'>
               <div className='arrowContainer'>
                 <img

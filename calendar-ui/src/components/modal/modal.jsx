@@ -20,7 +20,6 @@ export const Modal = () => {
 
   const closeModal = () => {
     modalRef.current.close()
-    dispatch({ type: 'modal/clearSelectedDay' })
   }
 
   const clearInputValues = () => {
@@ -62,13 +61,19 @@ export const Modal = () => {
     if (key === 'Enter') closeModal()
   }
 
+  // Sends data to the server when the modal is closed
+  const handleModalClose = () => {
+    console.log('modal has been closed')
+  }
+
   return (
     <div>
       <dialog
         id='modal'
         className='dialog'
-        ref={modalRef}
-        onKeyDown={handleKeyDown}>
+        onKeyDown={handleKeyDown}
+        onClose={handleModalClose}
+        ref={modalRef}>
         <div className='inputContainer'>
           <label className='modalLabel moneySpentLabel'>
             Money Spent:

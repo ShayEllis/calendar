@@ -10,19 +10,19 @@ app.use(express.json())
 app.use(cors())
 
 app.get('/api/calendar', async (req, res) => {
-  const calendarDays = await prisma.CalendarDays.findMany()
-  res.json(calendarDays)
+  const calendarData = await prisma.Calendar.findMany()
+  res.json(calendarData)
 })
 
 app.post('/api/calendar', async (req, res) => {
   const { dateString, moneySpent, background } = req.body
 
-  if (!dateString || !background) {
+  if (!dateString || typeof background !== 'boolean') {
     return res.status(400).send('Date string and background required.')
   }
 
   try {
-    const note = await prisma.CalendarDays.create({
+    const note = await prisma.Calendar.create({
       data: { dateString, moneySpent, background },
     })
     res.json(note)
@@ -31,21 +31,34 @@ app.post('/api/calendar', async (req, res) => {
   }
 })
 
-app.put('/api/calendar/:id', async (req, res) => {
+app.put('/api/calendar/:dateString', async (req, res) => {
   // change this to use dateString
-  const { dateString, moneySpent, background } = req.body
-  const id = parseInt(req.params.id) // change this to use dateString
-
-  if (!dateString || !background) {
+  const { moneySpent, background } = req.body
+  const dateString = req.params.dateString // change this to use dateString
+  if (typeof background !== 'boolean') {
     return res.status(400).send('Date string and background required.')
   }
 
   try {
-    const updateCalendarDay = await prisma.CalendarDays.update({
-      where: { id },
-      data: { dateString, moneySpent, background },
+    const updateCalendarDay = await prisma.Calendar.update({
+      where: { dateString }, // change this to use dateString
+      data: { moneySpent, background },
     })
     res.json(updateCalendarDay)
+  } catch (e) {
+    return res.status(500).send(e.message)
+  }
+})
+
+app.delete('/api/calendar/:id', async (req, res) => {
+  // change this to use dateString
+  const id = parseInt(req.params.id)
+
+  try {
+    await prisma.CalendarDays.delete({
+      where: { id }, // change this to use dateString
+    })
+    res.status(204).send()
   } catch (e) {
     return res.status(500).send(e.message)
   }

@@ -9,6 +9,13 @@ export const initialState = {
 // Reducers
 export const reducer = (state, action) => {
   switch (action.type) {
+    case 'app/loadCalenderDayData': {
+      const serverDayData = action.payload.reduce((acc, val) => {
+        acc[val.dateString] = {inputVal: val.moneySpent, background: val.background}
+        return acc
+      }, {})
+      return {...state, dayData: {...state.dayData, ...serverDayData}}
+    }
     case 'calendar/previousMonth': {
       return {
         ...state,
@@ -42,9 +49,6 @@ export const reducer = (state, action) => {
       } else {
         return { ...state, selectedDay: action.payload }
       }
-    }
-    case 'modal/clearSelectedDay': {
-      return { ...state, selectedDay: null }
     }
     case 'modal/clearInputValues': {
       return {

@@ -13,8 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model CalendarDays {
-  id Int @id @default(autoincrement())
+model Calendar {
   dateString String @id @db.VarChar(8) 
   moneySpent Int
   background Boolean @default(false)
