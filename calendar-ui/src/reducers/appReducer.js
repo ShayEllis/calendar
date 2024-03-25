@@ -11,7 +11,7 @@ export const reducer = (state, action) => {
   switch (action.type) {
     case 'app/loadCalenderDayData': {
       const serverDayData = action.payload.reduce((acc, val) => {
-        acc[val.dateString] = {inputVal: val.moneySpent, background: val.background}
+        acc[val.dateString] = {moneySpent: val.moneySpent, background: val.background}
         return acc
       }, {})
       return {...state, dayData: {...state.dayData, ...serverDayData}}
@@ -43,30 +43,30 @@ export const reducer = (state, action) => {
           selectedDay: action.payload,
           dayData: {
             ...state.dayData,
-            [action.payload]: { inputVal: 0, background: false },
+            [action.payload]: { moneySpent: 0, background: false },
           },
         }
       } else {
         return { ...state, selectedDay: action.payload }
       }
     }
-    case 'modal/clearInputValues': {
+    case 'modal/clearDayValues': {
       return {
         ...state,
         dayData: {
           ...state.dayData,
-          [action.payload]: { inputVal: 0, background: false },
+          [action.payload]: { moneySpent: 0, background: false },
         },
       }
     }
-    case 'modal/changeDayInputVal': {
+    case 'modal/changeMoneySpent': {
       return {
         ...state,
         dayData: {
           ...state.dayData,
           [action.payload.dayIdentifier]: {
             ...state.dayData[action.payload.dayIdentifier],
-            inputVal: action.payload.value,
+            moneySpent: action.payload.value,
           },
         },
       }

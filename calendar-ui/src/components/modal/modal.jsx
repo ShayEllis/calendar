@@ -4,13 +4,13 @@ import {
   CalendarContext,
   CalendarDispatchContext,
 } from '../../context/calendarContexts'
+import { calendarServer } from '../../utils/calendarServer'
 
 // This is a Modal wrapper component that will allow data to be entered on each calendar day
 export const Modal = () => {
   const state = useContext(CalendarContext)
   const dispatch = useContext(CalendarDispatchContext)
 
-  // if (!dayData[selectedDay]) modalInputChange('initializeDayData', selectedDay)
   // Reference to the modal so that it can be opened and closed
   const modalRef = useRef(null)
 
@@ -22,16 +22,16 @@ export const Modal = () => {
     modalRef.current.close()
   }
 
-  const clearInputValues = () => {
-    dispatch({ type: 'modal/clearInputValues', payload: state.selectedDay })
+  const clearDayValues = () => {
+    dispatch({ type: 'modal/clearDayValues', payload: state.selectedDay })
   }
 
   const modalInputChange = (event, dayIdentifier) => {
     switch (event.target.name) {
       case 'moneySpent':
         dispatch({
-          type: 'modal/changeDayInputVal',
-          payload: { dayIdentifier, value: event.target.value },
+          type: 'modal/changeMoneySpent',
+          payload: { dayIdentifier, value: parseInt(event.target.value) },
         })
         break
       case 'hasBackground':
@@ -63,7 +63,10 @@ export const Modal = () => {
 
   // Sends data to the server when the modal is closed
   const handleModalClose = () => {
-    console.log('modal has been closed')
+    calendarServer.updateCalendarDayData(
+      state.selectedDay,
+      state.dayData[state.selectedDay]
+    )
   }
 
   return (
@@ -81,7 +84,7 @@ export const Modal = () => {
               type='number'
               className='modalInput moneySpentInput'
               name='moneySpent'
-              value={state.dayData[state.selectedDay].inputVal}
+              value={state.dayData[state.selectedDay].moneySpent}
               onChange={(event) => modalInputChange(event, state.selectedDay)}
             />
           </label>
@@ -102,7 +105,7 @@ export const Modal = () => {
         <button className='modalSaveBtn' onClick={closeModal}>
           Save
         </button>
-        <button className='modalSaveBtn' onClick={clearInputValues}>
+        <button className='modalSaveBtn' onClick={clearDayValues}>
           Clear
         </button>
       </dialog>

@@ -10,8 +10,13 @@ app.use(express.json())
 app.use(cors())
 
 app.get('/api/calendar', async (req, res) => {
-  const calendarData = await prisma.Calendar.findMany()
-  res.json(calendarData)
+  try {
+    const calendarData = await prisma.Calendar.findMany()
+    return res.json(calendarData)
+  } catch (e) {
+    console.error(e.message)
+    return res.status(400).send('Failed to retrieve day data.')
+  }
 })
 
 app.post('/api/calendar', async (req, res) => {
@@ -25,28 +30,30 @@ app.post('/api/calendar', async (req, res) => {
     const note = await prisma.Calendar.create({
       data: { dateString, moneySpent, background },
     })
-    res.json(note)
+    return res.json(note)
   } catch (e) {
-    res.status(500).send(e.message)
+    console.error(e.message)
+    return res.status(500).send('Failed to add day data')
   }
 })
 
 app.put('/api/calendar/:dateString', async (req, res) => {
-  // change this to use dateString
   const { moneySpent, background } = req.body
-  const dateString = req.params.dateString // change this to use dateString
+  const dateString = req.params.dateString
+
   if (typeof background !== 'boolean') {
     return res.status(400).send('Date string and background required.')
   }
 
   try {
     const updateCalendarDay = await prisma.Calendar.update({
-      where: { dateString }, // change this to use dateString
-      data: { moneySpent, background },
+      where: { dateString },
+      data: { moneySpent: moneySpent, background },
     })
-    res.json(updateCalendarDay)
+    return res.json(updateCalendarDay)
   } catch (e) {
-    return res.status(500).send(e.message)
+    console.error(e.message)
+    return res.status(500).send('Failed to update')
   }
 })
 
@@ -58,7 +65,7 @@ app.delete('/api/calendar/:id', async (req, res) => {
     await prisma.CalendarDays.delete({
       where: { id }, // change this to use dateString
     })
-    res.status(204).send()
+    return res.status(204).send()
   } catch (e) {
     return res.status(500).send(e.message)
   }

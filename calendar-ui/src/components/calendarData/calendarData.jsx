@@ -10,8 +10,8 @@ export const CalendarData = ({ date, dayData }) => {
         style={
           dayData?.background ? { backgroundColor: '#5BBB60' } : undefined
         }>
-        {!!dayData?.inputVal && (
-          <div className='calendarData'>{`$${dayData.inputVal}`}</div>
+        {!!dayData?.moneySpent && (
+          <div className='calendarData'>{`$${dayData.moneySpent}`}</div>
         )}
       </div>
     </>
