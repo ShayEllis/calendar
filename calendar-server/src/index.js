@@ -53,29 +53,24 @@ app.put('/api/calendar/:dateString', async (req, res) => {
     return res.json(updateCalendarDay)
   } catch (e) {
     console.error(e.message)
-    return res.status(500).send('Failed to update')
+    return res.status(500).send('Failed to update day data')
   }
 })
 
-app.delete('/api/calendar/:id', async (req, res) => {
-  // change this to use dateString
-  const id = parseInt(req.params.id)
+app.delete('/api/calendar/:dateString', async (req, res) => {
+  const dateString = req.params.dateString
 
   try {
-    await prisma.CalendarDays.delete({
-      where: { id }, // change this to use dateString
+    await prisma.Calendar.delete({
+      where: { dateString },
     })
     return res.status(204).send()
   } catch (e) {
-    return res.status(500).send(e.message)
+    console.error(e.message)
+    return res.status(500).send('Failed to delete from database')
   }
 })
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`)
 })
-
-// const closeDatabaseConnection = async (queryFunction) => {
-//   const result = await queryFunction()
-
-// }

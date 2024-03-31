@@ -49,11 +49,7 @@ export const Modal = () => {
   }
 
   useEffect(() => {
-    if (state.selectedDay) {
-      if (!state.dayData[state.selectedDay])
-        dispatch({ type: 'modal/initializeDayData' })
-      showModal()
-    }
+    if (state.selectedDay) showModal()
   })
 
   // Allows the modal to be closed when the enter key on the keyboard is pressed
@@ -63,10 +59,29 @@ export const Modal = () => {
 
   // Sends data to the server when the modal is closed
   const handleModalClose = () => {
-    calendarServer.updateCalendarDayData(
-      state.selectedDay,
-      state.dayData[state.selectedDay]
-    )
+    const { moneySpent, background } = state.dayData[state.selectedDay]
+
+    if (state.exsistingDayData) {
+      if (!moneySpent && !background) {
+        calendarServer.deleteCalendarDayData(state.selectedDay)
+        dispatch({
+          type: 'modal/deleteCalendarDayData',
+          payload: state.selectedDay,
+        })
+      } else {
+        calendarServer.updateCalendarDayData(
+          state.selectedDay,
+          state.dayData[state.selectedDay]
+        )
+      }
+    } else if (!!moneySpent || background) {
+      const dayData = {
+        dateString: state.selectedDay,
+        ...state.dayData[state.selectedDay],
+      }
+      calendarServer.createCalendarDayData(dayData)
+    }
+    dispatch({ type: 'modal/removeSelectedDay' })
   }
 
   return (

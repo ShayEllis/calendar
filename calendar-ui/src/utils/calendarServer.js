@@ -1,7 +1,20 @@
 const apiURI = 'http://localhost:3000/api/calendar'
 
 export const calendarServer = {
-  async fetchCalendarDayData(stateDispatchFunc) {
+  async createCalendarDayData(data) {
+    const options = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    }
+    try {
+      const response = await fetch(apiURI, options)
+      if (!response.ok) throw new Error(await response.text())
+    } catch (e) {
+      console.error(e.message)
+    }
+  },
+  async fetchCalendarDayData() {
     try {
       const response = await fetch(apiURI)
       if (!response.ok) throw new Error(await response.text())
@@ -17,6 +30,18 @@ export const calendarServer = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
+    }
+
+    try {
+      const response = await fetch(`${apiURI}/${dateString}`, options)
+      if (!response.ok) throw new Error(await response.text())
+    } catch (e) {
+      console.error(e.message)
+    }
+  },
+  async deleteCalendarDayData(dateString) {
+    const options = {
+      method: 'DELETE',
     }
 
     try {
