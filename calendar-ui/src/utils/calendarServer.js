@@ -1,4 +1,4 @@
-const apiURI = 'http://localhost:3000/api/calendar'
+const apiURI = import.meta.env.VITE_API_URI
 
 export const calendarServer = {
   async createCalendarDayData(data) {
