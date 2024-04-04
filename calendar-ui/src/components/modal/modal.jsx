@@ -74,12 +74,19 @@ export const Modal = () => {
           state.dayData[state.selectedDay]
         )
       }
-    } else if (!!moneySpent || background) {
-      const dayData = {
-        dateString: state.selectedDay,
-        ...state.dayData[state.selectedDay],
+    } else {
+      if (!!moneySpent || background) {
+        const dayData = {
+          dateString: state.selectedDay,
+          ...state.dayData[state.selectedDay],
+        }
+        calendarServer.createCalendarDayData(dayData)
+      } else {
+        dispatch({
+          type: 'modal/deleteCalendarDayData',
+          payload: state.selectedDay,
+        })
       }
-      calendarServer.createCalendarDayData(dayData)
     }
     dispatch({ type: 'modal/removeSelectedDay' })
   }
